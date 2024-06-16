@@ -3,6 +3,7 @@ import { Question } from '../../interfaces/question';
 import { QuestionService } from '../../services/question.service';
 import { JsonPipe } from '@angular/common';
 import { QuestionItemComponent } from '../question-item/question-item.component';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-question-list',
@@ -23,7 +24,10 @@ export class QuestionListComponent {
   }
 
   private loadQuestions(page: number) {
-    this.questionService.getQuestions(page).subscribe(questions => {
+    this.questionService.getQuestions(page)
+    .pipe(
+      delay(5000),
+    ).subscribe(questions => {
       this.total = questions.total;
 
       this.questions.update(oldQuestions => {
